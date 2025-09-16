@@ -1,0 +1,19 @@
+name: Health check
+
+on:
+  schedule:
+    - cron: '0 7 * * *'
+  workflow_dispatch: 
+
+jobs:
+  health-check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check app health
+        uses: jtalk/url-health-check-action@v3
+        with:
+          url: https://full-stack-open-pokedex-8kdl.onrender.com/health
+          max-attempts: 3
+          retry-delay: 10s
+          follow-redirect: true
+          expect-status: 200
